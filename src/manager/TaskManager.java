@@ -43,7 +43,7 @@ public interface TaskManager {
 
     public boolean updateTask(Task task);
 
-    public boolean deleteTaskById(int taskId);
+    public boolean deleteAnyTaskById(int taskId);
 
     public List<Task> getSubTaskListByEpic(Epic epic);
 }

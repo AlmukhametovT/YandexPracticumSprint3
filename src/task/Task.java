@@ -6,7 +6,6 @@ import java.util.Map;
 public class Task {
     public static int lastTaskId = 1_000_000; // подготовленное значение для ID следующей задачи
     public static Map<Integer, Task> allTask = new HashMap<>(); // хранилище всех задач
-
     protected String title;
     protected String description;
     private final int taskId;

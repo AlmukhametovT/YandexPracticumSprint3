@@ -1,10 +1,9 @@
 import manager.*;
 import task.*;
 
-import java.util.Arrays;
-
 public class Main {
     public static void main(String[] args) {
+
         Epic epic1 = new Epic("Работать в удовольствие", "Стать Senior Java-разработчиком", TaskType.EPIC);
         Task subTask1Epic1 = new SubTask("Middle разработчик", "После джуна вырасти до Мидла",
                 TaskType.SUB_TASK, epic1);
@@ -14,7 +13,6 @@ public class Main {
         Task subTask1Epic2 = new SubTask("English", "London is the capital of Great Britain",
                 TaskType.SUB_TASK, epic2);
 
-        // Managers managers = new Managers();
         TaskManager taskManager = Managers.getDefault();
 
         taskManager.createTask(epic1);
@@ -40,24 +38,48 @@ public class Main {
         Task task1 = new Task("Проверить manager.TaskManager", "Проверить основные методы класса manager.TaskManager", TaskType.TASK);
         taskManager.createTask(task1);
 
+        Epic epic3 = new Epic("Эпик без подзадач", "Зачем мне подзадачи? я сам все могу!", TaskType.EPIC);
+        taskManager.createTask(epic3);
+
         taskManager.getAllTaskList().forEach(System.out::println);
 
+        //•	запросите созданные задачи несколько раз в разном порядке;
+        //•	после каждого запроса выведите историю и убедитесь, что в ней нет повторов;
         taskManager.getEpicById(1000003);
-        taskManager.getEpicById(1000003);
+        taskManager.getHistoryManager().printHistory();
+        taskManager.getById(1000003);
+        taskManager.getHistoryManager().printHistory();
         taskManager.getById(1000000);
+        taskManager.getHistoryManager().printHistory();
         taskManager.getTaskById(1000006);
+        taskManager.getHistoryManager().printHistory();
         taskManager.getSubTaskById(1000001);
+        taskManager.getHistoryManager().printHistory();
         taskManager.getEpicById(1000003);
-        taskManager.getEpicById(1000005);
-        taskManager.getEpicById(1000004);
+        taskManager.getHistoryManager().printHistory();
+        taskManager.getSubTaskById(1000005);
+        taskManager.getHistoryManager().printHistory();
+        taskManager.getSubTaskById(1000004);
+        taskManager.getHistoryManager().printHistory();
         taskManager.getById(1000000);
+        taskManager.getHistoryManager().printHistory();
         taskManager.getTaskById(1000006);
+        taskManager.getHistoryManager().printHistory();
         taskManager.getSubTaskById(1000002);
+        taskManager.getHistoryManager().printHistory();
         taskManager.getEpicById(1000000);
+        taskManager.getHistoryManager().printHistory();
         taskManager.getEpicById(1000003);
+        taskManager.getHistoryManager().printHistory();
+        taskManager.getById(1000007);
+        taskManager.getHistoryManager().printHistory();
 
-        System.out.println("Печать истории:");
-        System.out.println(taskManager.getHistoryManager().getHistory());
-        System.out.println(Arrays.deepToString(taskManager.getHistoryManager().getHistoryWithTimeAndMethodAndTaskId()));
+        //•	удалите задачу, которая есть в истории, и проверьте, что при печати она не будет выводиться;
+        taskManager.deleteAnyTaskById(1000004);
+        taskManager.getHistoryManager().printHistory();
+
+        //•	удалите эпик с тремя подзадачами и убедитесь, что из истории удалился как сам эпик, так и все его подзадачи.
+        taskManager.deleteAnyTaskById(1000000);
+        taskManager.getHistoryManager().printHistory();
     }
 }

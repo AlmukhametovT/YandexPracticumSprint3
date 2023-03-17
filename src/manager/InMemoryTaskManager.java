@@ -113,22 +113,28 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Task getTaskById(int taskId) {
-        historyManager.add(Task.allTask.get(taskId));
-        if (taskMap.containsKey(taskId)) return taskMap.get(taskId);
+        if (taskMap.containsKey(taskId)) {
+            historyManager.add(Task.allTask.get(taskId));
+            return taskMap.get(taskId);
+        }
         return null;
     }
 
     @Override
     public Task getSubTaskById(int taskId) {
-        historyManager.add(Task.allTask.get(taskId));
-        if (subTaskMap.containsKey(taskId)) return subTaskMap.get(taskId);
+        if (subTaskMap.containsKey(taskId)) {
+            historyManager.add(Task.allTask.get(taskId));
+            return subTaskMap.get(taskId);
+        }
         return null;
     }
 
     @Override
     public Task getEpicById(int taskId) {
-        historyManager.add(Task.allTask.get(taskId));
-        if (epicMap.containsKey(taskId)) return epicMap.get(taskId);
+        if (epicMap.containsKey(taskId)) {
+            historyManager.add(Task.allTask.get(taskId));
+            return epicMap.get(taskId);
+        }
         return null;
     }
 
@@ -178,13 +184,15 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public boolean deleteTaskById(int taskId) {
+    public boolean deleteAnyTaskById(int taskId) {
         if (!Task.allTask.containsKey(taskId)) return false;
         if (taskMap.containsKey(taskId)) {
+            historyManager.remove(taskId);
             taskMap.remove(taskId);
             Task.allTask.remove(taskId);
             return true;
         } else if (subTaskMap.containsKey(taskId)) {
+            historyManager.remove(taskId);
             subTaskMap.remove(taskId);
             ((Epic) Task.allTask.get(((SubTask) Task.allTask.get(taskId)).getEpicId())).getSubTaskIdSet().remove(taskId);
             if (((Epic) Task.allTask.get(((SubTask) Task.allTask.get(taskId)).getEpicId())).getSubTaskIdSet().isEmpty()) {
@@ -212,10 +220,12 @@ public class InMemoryTaskManager implements TaskManager {
             Task.allTask.remove(taskId);
             return true;
         } else if (epicMap.containsKey(taskId)) {
+            historyManager.remove(taskId);
             epicMap.remove(taskId);
             Map<Integer, Task> tempTaskMap = Task.allTask;
             for (int id : ((Epic) Task.allTask.get(taskId)).getSubTaskIdSet()) {
-                epicMap.remove(id);
+                historyManager.remove(id);
+                subTaskMap.remove(id);
                 tempTaskMap.remove(id);
             }
             Task.allTask = tempTaskMap;

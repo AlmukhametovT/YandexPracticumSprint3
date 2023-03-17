@@ -2,12 +2,14 @@ package manager;
 
 import task.Task;
 
-import java.util.LinkedList;
+import java.util.List;
 
 public interface HistoryManager {
     public boolean add(Task task);
 
-    public LinkedList<Task> getHistory();
+    public boolean remove(int id);
 
-    public String[][] getHistoryWithTimeAndMethodAndTaskId();
+    public List<Task> getHistory();
+
+    public void printHistory();
 }
