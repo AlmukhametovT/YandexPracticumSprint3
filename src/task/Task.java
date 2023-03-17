@@ -6,6 +6,7 @@ import java.util.Map;
 public class Task {
     public static int lastTaskId = 1_000_000; // подготовленное значение для ID следующей задачи
     public static Map<Integer, Task> allTask = new HashMap<>(); // хранилище всех задач
+
     protected String title;
     protected String description;
     private final int taskId;
@@ -15,9 +16,30 @@ public class Task {
     public Task(String title, String description, TaskType type) {
         this.title = title;
         this.description = description;
-        this.taskId = lastTaskId;
+        this.taskId = checkTaskId(lastTaskId);
         lastTaskId++;
         this.status = TaskStatus.NEW;
+        this.type = type;
+        allTask.put(taskId, this);
+    }
+
+    public int checkTaskId(int id) {
+        while (true) {
+            if (allTask.containsKey(id)) {
+                System.out.println("данный id уже есть в системе, объект не создан, попробуем " + lastTaskId);
+                id = lastTaskId;
+                lastTaskId++;
+                continue;
+            }
+            return id;
+        }
+    }
+
+    public Task(String title, String description, int taskId, TaskStatus status, TaskType type) {
+        this.title = title;
+        this.description = description;
+        this.taskId = checkTaskId(taskId);
+        this.status = status;
         this.type = type;
         allTask.put(taskId, this);
     }

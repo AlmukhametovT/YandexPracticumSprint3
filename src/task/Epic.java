@@ -13,6 +13,13 @@ public class Epic extends Task {
         this.subTaskIdSet = new HashSet<>();
     }
 
+    public Epic(String title, String description, int taskId, TaskStatus status, TaskType type) {
+        super(title, description, taskId, status, type);
+        if (type != TaskType.EPIC)
+            System.out.println("Когда создаешь главную задачу тип должен быть Epic (я за тебя все исправил)");
+        this.subTaskIdSet = new HashSet<>();
+    }
+
     public Set<Integer> getSubTaskIdSet() {
         return subTaskIdSet;
     }

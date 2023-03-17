@@ -20,6 +20,23 @@ public class SubTask extends Task {
         }
     }
 
+    public SubTask(String title, String description, int taskId, TaskStatus status, TaskType type, int epicId) {
+        super(title, description, taskId, status, TaskType.SUB_TASK);
+        if (type != TaskType.SUB_TASK)
+            System.out.println("Когда создаешь подзадачу тип должен быть SubTask (я за тебя все исправил)");
+        if (!Task.allTask.containsKey(epicId) || !Task.allTask.get(epicId).getType().equals(TaskType.EPIC)) {
+            System.out.println("до создания SUB_TASK нужен EPIC, EPIC по данному id не найден");
+            return;
+        }
+        this.epicId = epicId;
+        ((Epic) Task.allTask.get(epicId)).getSubTaskIdSet().add(taskId);
+        if (Task.allTask.get(epicId).getStatus() == TaskStatus.DONE) {
+            if (((Epic) Task.allTask.get(epicId)).getSubTaskIdSet().size() == 1) {
+                Task.allTask.get(epicId).setStatus(TaskStatus.NEW);
+            } else Task.allTask.get(epicId).setStatus(TaskStatus.IN_PROGRESS);
+        }
+    }
+
     public int getEpicId() {
         return epicId;
     }

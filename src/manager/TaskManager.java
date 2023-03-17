@@ -1,5 +1,6 @@
 package manager;
 
+import exceptions.ManagerSaveException;
 import task.*;
 
 import java.util.*;
@@ -23,9 +24,9 @@ public interface TaskManager {
 
     public HistoryManager getHistoryManager();
 
-    public void deleteAll();
+    public void deleteAll() throws ManagerSaveException;
 
-    public void deleteAllTask();
+    public void deleteAllTask() throws ManagerSaveException;
 
     public void deleteAllSubTask();
 
