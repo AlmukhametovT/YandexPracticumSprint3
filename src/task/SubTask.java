@@ -8,11 +8,11 @@ public class SubTask extends Task {
         if (type != TaskType.SUB_TASK)
             System.out.println("Когда создаешь подзадачу тип должен быть SubTask (я за тебя все исправил)");
         if (epic.getType() != TaskType.EPIC) {
-            System.out.println("в конструктор переданы некорректные параметры, главная задача должна быть типа task.Epic");
+            System.out.println("в конструктор переданы некорректные параметры, главная задача должна быть типа Epic");
             return;
         }
         this.epicId = epic.getTaskId();
-        epic.getSubTaskIdSet().add(this.getTaskId());
+        epic.getSubTaskIdSet().add(getTaskId());
         if (epic.getStatus() == TaskStatus.DONE) {
             if (epic.getSubTaskIdSet().size() == 1) {
                 epic.setStatus(TaskStatus.NEW);

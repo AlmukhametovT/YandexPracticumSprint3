@@ -26,11 +26,11 @@ public class Epic extends Task {
         StringBuilder sb = new StringBuilder();
         sb.append(super.toString());
         sb.append(" -> subTaskList=");
-        if (this.getSubTaskIdSet().isEmpty()) {
+        if (subTaskIdSet.isEmpty()) {
             sb.append("подзадачи отсутсвуют!!!");
             return String.valueOf(sb);
         }
-        for (int subTaskId : this.getSubTaskIdSet()) {
+        for (int subTaskId : subTaskIdSet) {
             sb.append("|");
             sb.append(Task.allTask.get(subTaskId).getTitle());
             sb.append("/");
